@@ -30,3 +30,15 @@ function searchNovel() {
   });
 }
 
+
+function openOrderForm(bookTitle) {
+  document.getElementById('book-title').value = bookTitle;
+
+  const orderForm = document.getElementById('order-form');
+  orderForm.style.display = 'block';
+}
+
+document.getElementById('close-order-form').addEventListener('click', function() {
+  const orderForm = document.getElementById('order-form');
+  orderForm.style.display = 'none'; 
+});

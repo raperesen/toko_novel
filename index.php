@@ -12,7 +12,6 @@ if ($conn->connect_error) {
 $category = isset($_GET['category']) ? $_GET['category'] : '';
 $year = isset($_GET['year']) ? $_GET['year'] : '';
 
-
 $sql = "SELECT * FROM books";
 $conditions = [];
 
@@ -45,7 +44,7 @@ $result = $conn->query($sql);
             <h1>Toko Novel Online</h1>
             <div class="center-menu">
                 <ul>
-                    <li><strong><a href="index.php">Home</a></strong></li>
+                    <li><strong><a href="index.php">home</a></strong></li>
                     <li><strong><a href="javascript:void(0);" onclick="toggleGenre()">Genre</a></strong>
                         <ul id="genre-options" class="submenu" style="display: none">
                             <li><a href="index.php?category=Romantis">Novel Romantis</a></li>
@@ -60,7 +59,6 @@ $result = $conn->query($sql);
                             <li><a href="index.php?year=2023">2023</a></li>
                         </ul>
                     </li>
-
                 </ul>
             </div>
         </div>
@@ -81,17 +79,50 @@ $result = $conn->query($sql);
                 <?php if ($result->num_rows > 0): ?>
                 <?php while($row = $result->fetch_assoc()): ?>
                 <div class="product" data-genre="<?php echo htmlspecialchars($row['category']); ?>"
-                    data-year="<?php echo htmlspecialchars($row['year']); ?>">
+                    data-year="<?php echo htmlspecialchars($row['year']); ?>" onclick="openOrderForm('<?php echo htmlspecialchars($row['title']); ?>')">
                     <img src="<?php echo htmlspecialchars($row['image_url']); ?>"
                         alt="<?php echo htmlspecialchars($row['title']); ?>" />
                     <h3><?php echo htmlspecialchars($row['title']); ?></h3>
                     <p>Rp<?php echo number_format($row['price'], 0, ',', '.'); ?></p>
+                    <button class="order-button">Pesan</button>
                 </div>
                 <?php endwhile; ?>
                 <?php else: ?>
                 <p>Tidak ada buku ditemukan.</p>
                 <?php endif; ?>
             </div>
+
+            
+            <div id="order-form" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); padding: 20px; background-color: #fff; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); z-index: 1000; width: 400px;">
+                <h3>Form Pemesanan</h3>
+                <form id="order-form-table" method="POST" action="order.php">
+                    <table>
+                        <tr>
+                            <td><label for="name">Nama:</label></td>
+                            <td><input type="text" id="name" name="name" required /></td>
+                        </tr>
+                        <tr>
+                            <td><label for="phone">No HP:</label></td>
+                            <td><input type="text" id="phone" name="phone" required /></td>
+                        </tr>
+                        <tr>
+                            <td><label for="address">Alamat:</label></td>
+                            <td><input type="text" id="address" name="address" required /></td>
+                        </tr>
+                        <tr>
+                            <td><label for="email">Email:</label></td>
+                            <td><input type="email" id="email" name="email" required /></td>
+                        </tr>
+                        <tr>
+                            <td><label for="book-title">Judul Buku:</label></td>
+                            <td><input type="text" id="book-title" name="book_title" required readonly /></td>
+                        </tr>
+                    </table>
+                    <button type="submit">Kirim Pemesanan</button>
+                </form>
+                <button id="close-order-form">Tutup</button>
+            </div>
+
         </section>
     </main>
 
@@ -102,25 +133,6 @@ $result = $conn->query($sql);
     <script src="script.js"></script>
 
 </body>
-<section id="contact" class="contact">
-        <h2 class="contact-title">Hubungi Kami</h2>
-        <form id="contactForm" class="contact-form" onsubmit="sendMessage(event)">
-            <label for="contactName" class="contact-label">Nama:</label>
-            <input type="text" id="contactName" name="name" required class="contact-input" />
-    
-            <label for="contactTelpon" class="contact-label">Telpon:</label>
-            <input type="text" id="contactTelpon" name="telpon" required class="contact-input" />
-    
-            <label for="contactEmail" class="contact-label">Email:</label>
-            <input type="email" id="contactEmail" name="email" required class="contact-input" />
-    
-            <label for="contactMessage" class="contact-label">Pesan:</label>
-            <textarea id="contactMessage" name="pesan" required class="contact-textarea"></textarea>
-    
-            <button type="submit" class="contact-button">Kirim</button>
-        </form>
-    </section>
-    
 </html>
 
 <?php

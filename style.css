@@ -32,13 +32,17 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: relative;
+  position: fixed; 
+  top: 0; 
+  left: 0; 
+  width: 100%; 
+  z-index: 1000;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
 }
 
-header h1 {
-  font-size: 36px;
-  font-weight: bold;
-}
+
+body {
+  padding-top: 70px; }
 
 
 .center-menu {
@@ -148,7 +152,7 @@ button:hover {
 
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); 
+  grid-template-columns: repeat(5, 1fr); 
   gap: 20px;
   margin-top: 20px;
 }
@@ -222,6 +226,50 @@ footer p {
   .product-grid {
     grid-template-columns: 1fr; 
   }
+}
+
+
+#order-form {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  width: 400px;
+}
+
+#order-form table {
+  width: 100%;
+}
+
+#order-form td {
+  padding: 8px;
+}
+
+#order-form input {
+  width: 100%;
+  padding: 8px;
+  margin: 5px 0;
+}
+
+button {
+  padding: 10px 15px;
+  font-size: 16px;
+  background-color: #ff6347;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+button:hover {
+  background-color: #968582;
 }
 
 
